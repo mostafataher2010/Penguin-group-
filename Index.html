@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Penguin Group 🐧</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #000000; /* Pure black */
+        margin: 0;
+        padding: 0;
+        color: white;
+        text-align: center;
+        overflow-x: hidden;
+    }
+    h1 {
+        font-size: 3em;
+        margin: 20px 10px 30px 10px;
+        background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: bold;
+    }
+    button, .button-link {
+        padding: 15px 30px;
+        margin: 8px 5px;
+        font-size: 1.2em;
+        cursor: pointer;
+        border: none;
+        border-radius: 15px;
+        transition: 0.3s;
+    }
+    button:hover, .button-link:hover { transform: scale(1.05); }
+    #joinBtn { background-color: #001f7f; color: white; }
+    #feedbackBtn { background-color: #333; color: white; }
+    #rulesBtn { background-color: #222; color: white; }
+    .section { display: none; margin-top: 20px; padding: 10px; }
+    .inputField, textarea {
+        width: 90%; max-width: 300px; padding: 12px; margin: 8px 0;
+        border-radius: 10px; border: none; font-size: 1em; text-align: center;
+    }
+    .rainbow { background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; }
+    .gold { color: gold; font-weight: bold; }
+    .fade-warning { animation: fadeInOut 2s infinite; color: red; margin: 10px 0; font-size: 0.9em; }
+    @keyframes fadeInOut { 0%,100%{opacity:0;}50%{opacity:1;} }
+    #generatedText, #generatedCode, #reportText { margin: 10px 0; cursor: pointer; background: #111; padding: 12px; border-radius: 10px; }
+    #timerText { margin: 5px 0; font-size: 1em; }
+    .admin-section { margin-top: 15px; display: flex; flex-direction: column; align-items: center; }
+    #rulesSection p { text-align: left; padding: 0 15px; line-height: 1.5em; }
+    @media (max-width: 500px){
+        h1 { font-size: 2.2em; }
+        button, .button-link { font-size: 1.1em; padding: 12px 20px; }
+        .inputField, textarea { width: 95%; }
+    }
+</style>
+</head>
+<body>
+
+<h1>The Penguin Group 🐧</h1>
+
+<button id="joinBtn">Join!!</button>
+<button id="feedbackBtn">Feedback</button>
+<button id="rulesBtn">Rules</button>
+
+<!-- Join Section -->
+<div id="joinSection" class="section">
+    <p>Before you join, enter your name and age! Or let us generate it for you.</p>
+    <input id="nameInput" class="inputField" type="text" placeholder="Your Name">
+    <input id="ageInput" class="inputField" type="number" placeholder="Your Age">
+    <button onclick="generateIntro()">Generate Intro</button>
+    <p id="generatedText"></p>
+    <div id="codeSection" style="display:none;">
+        <button onclick="startTimer()">Get your code</button>
+        <p id="timerText"></p>
+        <p id="generatedCode"></p>
+    </div>
+</div>
+
+<!-- Feedback Section -->
+<div id="feedbackSection" class="section">
+    <div class="admin-section">
+        <button class="button-link rainbow" onclick="reportOwner('Owner','Joan David','https://wa.me/2015554497672')">Owner: Joan David</button>
+        <button class="button-link rainbow" onclick="reportOwner('Owner','Mostafa Taher','https://wa.me/201065694868')">Owner: Mostafa Taher</button>
+        <button class="button-link rainbow" onclick="reportOwner('Owner','Alma','https://wa.me/201095555802')">Owner: Alma</button>
+        <button class="button-link gold" onclick="reportOwner('Admin','Adam Nasser','https://wa.me/201061176821')">Admin: Adam Nasser</button>
+        <button class="button-link gold" onclick="reportOwner('Admin','Adam','https://wa.me/201021663231')">Admin: Adam</button>
+        <button class="button-link gold" onclick="reportOwner('Admin','Mohamed Tamer','https://wa.me/201065814983')">Admin: Mohamed Tamer</button>
+    </div>
+    <p class="fade-warning">⚠️ Only contact owners/admins for serious issues or breaking rules!</p>
+    <div id="reportSection" style="display:none; margin-top:15px;">
+        <p id="reportPrompt"></p>
+        <textarea id="reportInput" class="inputField" rows="3" placeholder="Type your message here..."></textarea>
+        <button id="sendReportBtn" style="display:none;" onclick="sendReport()">Send & Open DM</button>
+    </div>
+</div>
+
+<!-- Rules Section -->
+<div id="rulesSection" class="section">
+    <p>
+    🐧 <b>Group Rules</b> 🐧<br><br>
+    1. Respect everyone – no bullying or hate.<br>
+    2. Cuss words allowed, not heavy ones.<br>
+    3. No spamming messages, stickers, or voice notes.<br>
+    4. Meta AI is fine, don't spam.<br>
+    5. Jokes and memes welcome, keep it fun.<br>
+    6. Avoid fights about politics or religion.<br>
+    7. Don’t cause drama or pick fights.<br>
+    8. Listen to admins instructions.<br>
+    9. Enjoy the group and vibe with penguins 🐧✨<br><br>
+    📢 Message from the Owners:<br>
+    This group is made for fun, vibes, and friendship. Follow rules and respect each other!
+    </p>
+</div>
+
+<p>Made by Mostafa | scripts by ChatGPT 💀</p>
+
+<script>
+const joinBtn = document.getElementById('joinBtn');
+const feedbackBtn = document.getElementById('feedbackBtn');
+const rulesBtn = document.getElementById('rulesBtn');
+const joinSection = document.getElementById('joinSection');
+const feedbackSection = document.getElementById('feedbackSection');
+const rulesSection = document.getElementById('rulesSection');
+joinBtn.onclick = () => { joinSection.style.display='block'; feedbackSection.style.display='none'; rulesSection.style.display='none'; };
+feedbackBtn.onclick = () => { feedbackSection.style.display='block'; joinSection.style.display='none'; rulesSection.style.display='none'; };
+rulesBtn.onclick = () => { rulesSection.style.display='block'; joinSection.style.display='none'; feedbackSection.style.display='none'; };
+
+// Join Section
+const generatedText = document.getElementById('generatedText');
+const codeSection = document.getElementById('codeSection');
+const timerText = document.getElementById('timerText');
+const generatedCode = document.getElementById('generatedCode');
+
+function generateIntro(){
+    const name=document.getElementById('nameInput').value||"Your Name";
+    const age=document.getElementById('ageInput').value||"Your Age";
+    const text=`Hello👋 I am ${name} and I am ${age}. I just wanted to join and have fun and make some friends`;
+    generatedText.textContent=text;
+    generatedText.onclick=()=>{
+        navigator.clipboard.writeText(text);
+        alert("Text copied! Now get your code.");
+        codeSection.style.display='block';
+    };
+}
+
+function startTimer(){
+    let time=30;
+    timerText.textContent=`Please wait: ${time} seconds`;
+    const interval=setInterval(()=>{
+        time--;
+        timerText.textContent=`Please wait: ${time} seconds`;
+        if(time<=0){
+            clearInterval(interval);
+            timerText.textContent='Time finished!';
+            const code=Math.random().toString(36).substring(2,10).toUpperCase();
+            generatedCode.textContent=`Your Code: ${code}`;
+            generatedCode.onclick=()=>{
+                navigator.clipboard.writeText(code);
+                window.open('https://chat.whatsapp.com/EvClExqiyMw4mdIgMaRvXX?mode=ems_copy_t','_blank');
+            };
+        }
+    },1000);
+}
+
+// Feedback / Owner-Admin Reporting
+const reportSection=document.getElementById('reportSection');
+const reportPrompt=document.getElementById('reportPrompt');
+const reportInput=document.getElementById('reportInput');
+const sendReportBtn=document.getElementById('sendReportBtn');
+let currentLink='';
+
+function reportOwner(type,name,link){
+    reportSection.style.display='block';
+    reportPrompt.textContent=`Please report what you want before we take you to ${type}: ${name}. Wait for their reply.`;
+    reportInput.value='';
+    sendReportBtn.style.display='none';
+    currentLink=link;
+}
+reportInput.addEventListener('input', ()=>{
+    if(reportInput.value.trim().length>0) sendReportBtn.style.display='block';
+    else sendReportBtn.style.display='none';
+});
+function sendReport(){
+    const message=reportInput.value;
+    navigator.clipboard.writeText(message);
+    window.open(currentLink,'_blank');
+}
+</script>
+
+</body>
+</html>
