@@ -5,52 +5,177 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Penguin Group 🐧</title>
 <style>
+    /* ---------- Base Styles ---------- */
+    * {
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+    }
     body {
-        font-family: 'Arial', sans-serif;
-        background-color: #000000; /* Pure black */
+        font-family: 'Poppins', Arial, sans-serif;
+        background: radial-gradient(circle at center, #000000 50%, #060606 100%);
         margin: 0;
         padding: 0;
-        color: white;
+        color: #fff;
         text-align: center;
         overflow-x: hidden;
+        animation: fadeIn 1s ease forwards;
     }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* ---------- Animated Rainbow Text ---------- */
     h1 {
         font-size: 3em;
-        margin: 20px 10px 30px 10px;
-        background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+        margin: 25px 10px 30px 10px;
+        font-weight: 800;
+        background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
+        background-size: 400%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        animation: rainbowShift 5s linear infinite;
+        text-shadow: 0 0 20px rgba(255,255,255,0.2);
+    }
+
+    @keyframes rainbowShift {
+        0% { background-position: 0%; }
+        100% { background-position: 400%; }
+    }
+
+    /* ---------- Buttons ---------- */
+    button, .button-link {
+        padding: 15px 35px;
+        margin: 10px 8px;
+        font-size: 1.1em;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: bold;
+        background: linear-gradient(90deg, #007bff, #00d4ff);
+        color: white;
+        box-shadow: 0 0 15px rgba(0,0,0,0.4);
+        transform: translateY(0);
+    }
+
+    button:hover, .button-link:hover {
+        transform: translateY(-4px) scale(1.05);
+        box-shadow: 0 0 25px rgba(0,150,255,0.7);
+    }
+
+    #joinBtn { background: linear-gradient(90deg, #001f7f, #003cff); }
+    #feedbackBtn { background: linear-gradient(90deg, #333, #777); }
+    #rulesBtn { background: linear-gradient(90deg, #111, #444); }
+
+    /* ---------- Sections ---------- */
+    .section {
+        display: none;
+        margin-top: 25px;
+        padding: 15px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 20px;
+        box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
+        animation: slideUp 0.8s ease forwards;
+    }
+
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---------- Inputs ---------- */
+    .inputField, textarea {
+        width: 90%;
+        max-width: 320px;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 15px;
+        border: none;
+        font-size: 1em;
+        text-align: center;
+        outline: none;
+        background: rgba(255,255,255,0.1);
+        color: white;
+        backdrop-filter: blur(5px);
+    }
+
+    .inputField:focus, textarea:focus {
+        box-shadow: 0 0 10px rgba(255,255,255,0.4);
+    }
+
+    /* ---------- Rainbow Glow ---------- */
+    .rainbow {
+        background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
+        background-size: 400%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: rainbowShift 5s linear infinite;
         font-weight: bold;
     }
-    button, .button-link {
-        padding: 15px 30px;
-        margin: 8px 5px;
-        font-size: 1.2em;
+
+    .gold {
+        color: gold;
+        text-shadow: 0 0 10px gold;
+        font-weight: bold;
+    }
+
+    /* ---------- Fade Warning ---------- */
+    .fade-warning {
+        animation: fadeInOut 2s infinite;
+        color: #ff4444;
+        margin: 12px 0;
+        font-size: 0.9em;
+    }
+
+    @keyframes fadeInOut {
+        0%,100% { opacity: 0; }
+        50% { opacity: 1; }
+    }
+
+    /* ---------- Outputs ---------- */
+    #generatedText, #generatedCode, #reportText {
+        margin: 12px 0;
         cursor: pointer;
-        border: none;
+        background: rgba(255,255,255,0.05);
+        padding: 12px;
         border-radius: 15px;
-        transition: 0.3s;
+        box-shadow: 0 0 5px rgba(255,255,255,0.05);
+        transition: background 0.3s;
     }
-    button:hover, .button-link:hover { transform: scale(1.05); }
-    #joinBtn { background-color: #001f7f; color: white; }
-    #feedbackBtn { background-color: #333; color: white; }
-    #rulesBtn { background-color: #222; color: white; }
-    .section { display: none; margin-top: 20px; padding: 10px; }
-    .inputField, textarea {
-        width: 90%; max-width: 300px; padding: 12px; margin: 8px 0;
-        border-radius: 10px; border: none; font-size: 1em; text-align: center;
+
+    #generatedText:hover, #generatedCode:hover {
+        background: rgba(255,255,255,0.15);
     }
-    .rainbow { background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; }
-    .gold { color: gold; font-weight: bold; }
-    .fade-warning { animation: fadeInOut 2s infinite; color: red; margin: 10px 0; font-size: 0.9em; }
-    @keyframes fadeInOut { 0%,100%{opacity:0;}50%{opacity:1;} }
-    #generatedText, #generatedCode, #reportText { margin: 10px 0; cursor: pointer; background: #111; padding: 12px; border-radius: 10px; }
-    #timerText { margin: 5px 0; font-size: 1em; }
-    .admin-section { margin-top: 15px; display: flex; flex-direction: column; align-items: center; }
-    #rulesSection p { text-align: left; padding: 0 15px; line-height: 1.5em; }
-    @media (max-width: 500px){
+
+    #timerText {
+        margin: 8px 0;
+        font-size: 1em;
+    }
+
+    .admin-section {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #rulesSection p {
+        text-align: left;
+        padding: 0 15px;
+        line-height: 1.7em;
+        color: #ddd;
+    }
+
+    p.footer {
+        margin-top: 30px;
+        color: #777;
+        font-size: 0.9em;
+    }
+
+    @media (max-width: 500px) {
         h1 { font-size: 2.2em; }
-        button, .button-link { font-size: 1.1em; padding: 12px 20px; }
+        button, .button-link { font-size: 1em; padding: 12px 20px; }
         .inputField, textarea { width: 95%; }
     }
 </style>
@@ -98,22 +223,22 @@
 <!-- Rules Section -->
 <div id="rulesSection" class="section">
     <p>
-    🐧 <b>Group Rules</b> 🐧<br><br>
-    1. Respect everyone – no bullying or hate.<br>
-    2. Cuss words allowed, not heavy ones.<br>
-    3. No spamming messages, stickers, or voice notes.<br>
-    4. Meta AI is fine, don't spam.<br>
-    5. Jokes and memes welcome, keep it fun.<br>
-    6. Avoid fights about politics or religion.<br>
-    7. Don’t cause drama or pick fights.<br>
-    8. Listen to admins instructions.<br>
-    9. Enjoy the group and vibe with penguins 🐧✨<br><br>
-    📢 Message from the Owners:<br>
-    This group is made for fun, vibes, and friendship. Follow rules and respect each other!
+        🐧 <b>Group Rules</b> 🐧<br><br>
+        1. Respect everyone – no bullying or hate.<br>
+        2. Cuss words allowed, not heavy ones.<br>
+        3. No spamming messages, stickers, or voice notes.<br>
+        4. Meta AI is fine, don't spam.<br>
+        5. Jokes and memes welcome, keep it fun.<br>
+        6. Avoid fights about politics or religion.<br>
+        7. Don’t cause drama or pick fights.<br>
+        8. Listen to admins’ instructions.<br>
+        9. Enjoy the group and vibe with penguins 🐧✨<br><br>
+        📢 Message from the Owners:<br>
+        This group is made for fun, vibes, and friendship. Follow rules and respect each other!
     </p>
 </div>
 
-<p>Made by Mostafa | scripts by ChatGPT 💀</p>
+<p class="footer">Made by Mostafa | scripts by ChatGPT 💀</p>
 
 <script>
 const joinBtn = document.getElementById('joinBtn');
@@ -122,11 +247,17 @@ const rulesBtn = document.getElementById('rulesBtn');
 const joinSection = document.getElementById('joinSection');
 const feedbackSection = document.getElementById('feedbackSection');
 const rulesSection = document.getElementById('rulesSection');
-joinBtn.onclick = () => { joinSection.style.display='block'; feedbackSection.style.display='none'; rulesSection.style.display='none'; };
-feedbackBtn.onclick = () => { feedbackSection.style.display='block'; joinSection.style.display='none'; rulesSection.style.display='none'; };
-rulesBtn.onclick = () => { rulesSection.style.display='block'; joinSection.style.display='none'; feedbackSection.style.display='none'; };
 
-// Join Section
+joinBtn.onclick = () => showSection(joinSection);
+feedbackBtn.onclick = () => showSection(feedbackSection);
+rulesBtn.onclick = () => showSection(rulesSection);
+
+function showSection(section){
+    [joinSection, feedbackSection, rulesSection].forEach(s => s.style.display = 'none');
+    section.style.display = 'block';
+}
+
+/* Join Section */
 const generatedText = document.getElementById('generatedText');
 const codeSection = document.getElementById('codeSection');
 const timerText = document.getElementById('timerText');
@@ -135,35 +266,35 @@ const generatedCode = document.getElementById('generatedCode');
 function generateIntro(){
     const name=document.getElementById('nameInput').value||"Your Name";
     const age=document.getElementById('ageInput').value||"Your Age";
-    const text=`Hello👋 I am ${name} and I am ${age}. I just wanted to join and have fun and make some friends`;
+    const text=`Hello👋 I am ${name} and I am ${age}. I just wanted to join and have fun and make some friends.`;
     generatedText.textContent=text;
     generatedText.onclick=()=>{
         navigator.clipboard.writeText(text);
-        alert("Text copied! Now get your code.");
+        alert("Text copied! Now get your code 🐧");
         codeSection.style.display='block';
     };
 }
 
 function startTimer(){
-    let time=30;
-    timerText.textContent=`Please wait: ${time} seconds`;
+    let time=20;
+    timerText.textContent=`Please wait: ${time}s`;
     const interval=setInterval(()=>{
         time--;
-        timerText.textContent=`Please wait: ${time} seconds`;
+        timerText.textContent=`Please wait: ${time}s`;
         if(time<=0){
             clearInterval(interval);
-            timerText.textContent='Time finished!';
+            timerText.textContent='✅ Time finished!';
             const code=Math.random().toString(36).substring(2,10).toUpperCase();
             generatedCode.textContent=`Your Code: ${code}`;
             generatedCode.onclick=()=>{
                 navigator.clipboard.writeText(code);
-                window.open('https://chat.whatsapp.com/EvClExqiyMw4mdIgMaRvXX?mode=ems_copy_t','_blank');
+                window.open('https://chat.whatsapp.com/EvClExqiyMw4mdIgMaRvXX','_blank');
             };
         }
     },1000);
 }
 
-// Feedback / Owner-Admin Reporting
+/* Feedback Section */
 const reportSection=document.getElementById('reportSection');
 const reportPrompt=document.getElementById('reportPrompt');
 const reportInput=document.getElementById('reportInput');
@@ -172,14 +303,13 @@ let currentLink='';
 
 function reportOwner(type,name,link){
     reportSection.style.display='block';
-    reportPrompt.textContent=`Please report what you want before we take you to ${type}: ${name}. Wait for their reply.`;
+    reportPrompt.textContent=`Please type your message before contacting ${type}: ${name}`;
     reportInput.value='';
     sendReportBtn.style.display='none';
     currentLink=link;
 }
 reportInput.addEventListener('input', ()=>{
-    if(reportInput.value.trim().length>0) sendReportBtn.style.display='block';
-    else sendReportBtn.style.display='none';
+    sendReportBtn.style.display = reportInput.value.trim().length > 0 ? 'block' : 'none';
 });
 function sendReport(){
     const message=reportInput.value;
